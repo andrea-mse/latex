@@ -11,8 +11,10 @@ jobs:
       uses: actions/checkout@v2
     - name: Build Docker image
       run: docker build --tag mactavishediting/latex:latest --tag mactavishediting/latex:${GITHUB_SHA:0:4} .
-    - name: Verify we can build a PDF
-      run: docker run mactavishediting/latex:latest make
+    - name: Clone template
+      run: git clone https://github.com/mactavishediting/latex_template.git
+    - name: Verify we can build the PDF
+      run: docker run --volume latex_template:/workdir mactavishediting/latex:latest make
     - name: Docker log-in
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
