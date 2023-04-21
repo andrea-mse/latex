@@ -9,16 +9,12 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v2
-    - name: Clone template
-      run: git clone https://github.com/mactavishediting/latex_template.git
-    - name: list working directory
-      run: ls
-    - name: list latex_template
-      run: ls ./latex_template
     - name: Build Docker image
       run: docker build --tag mactavishediting/latex:latest --tag mactavishediting/latex:${GITHUB_SHA:0:4} .
+    - name: Clone template
+      run: git clone https://github.com/mactavishediting/latex_template.git
     - name: Verify we can build the PDF
-      run: docker run --volume ./latex_template:/workdir mactavishediting/latex:latest make
+      run: docker run --volume ./latex_template/paper.tex:/workdir/paper.tex mactavishediting/latex:latest make
     - name: Docker log-in
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
