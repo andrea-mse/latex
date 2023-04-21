@@ -1,0 +1,24 @@
+name: Push latest Docker image
+on:
+  push:
+    branches:
+      - main
+jobs:
+  actions:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    - name: Build Docker image
+      run: docker build --tag mactavishediting/latex:latest --tag mactavishediting/latex:${GITHUB_SHA:0:4} .
+    - name: Verify we can build a PDF
+      run: docker run mactavishediting/latex:latest make
+    - name: Docker log-in
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+    - name: Push latest Docker image
+      run: docker push mactavishediting/latex:latest
+    - name: Push sha Docker image
+      run: docker push mactavishediting/latex:${GITHUB_SHA:0:4}
