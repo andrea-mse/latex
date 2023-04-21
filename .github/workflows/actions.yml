@@ -14,7 +14,7 @@ jobs:
     - name: Clone template
       run: git clone https://github.com/mactavishediting/latex_template.git
     - name: Verify we can build the PDF
-      run: docker run --volume ${PWD}/latex_template:/workdir mactavishediting/latex:latest make
+      run: docker run --volume ${PWD}/latex_template/paper.tex:/workdir/paper.tex mactavishediting/latex:latest make
     - name: Docker log-in
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
