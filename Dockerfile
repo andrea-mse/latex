@@ -1,7 +1,6 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 COPY . .
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update -qq && apt-get install -qq \
+RUN apt update && apt install --yes \
     make \
     texlive-full \
         && \
