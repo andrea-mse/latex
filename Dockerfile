@@ -1,5 +1,6 @@
 FROM ubuntu:22.04
-COPY . .
+WORKDIR /workdir
+COPY . /workdir
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt install --yes \
     make \
