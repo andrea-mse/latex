@@ -1,1 +1,1 @@
-latex
+# MSE LaTeX Docker image
