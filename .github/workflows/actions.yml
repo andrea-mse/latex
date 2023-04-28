@@ -15,9 +15,11 @@ jobs:
       run: git clone https://github.com/mactavishediting/paper.tex.git
     - name: Verify we can build the PDF
       run: docker run --name latex --volume ${PWD}/paper.tex/paper.tex:/workdir/paper.tex mactavishediting/latex:latest make
+    - name: Copy the DOCX
+      run: docker cp latex:/workdir/paper.docx $PWD
     - name: Copy the PDF
       run: docker cp latex:/workdir/paper.pdf $PWD
-    - name: Save the PDF
+    - name: Save the PDF and DOCX
       uses: actions/upload-artifact@v3
       with:
         name: paper
