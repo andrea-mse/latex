@@ -21,7 +21,9 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: paper
-        path: paper.pdf
+        path: |
+          paper.pdf
+          paper.docx
     - name: Docker log-in
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
